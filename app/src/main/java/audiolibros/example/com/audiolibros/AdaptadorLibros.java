@@ -60,7 +60,7 @@ public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHo
         final Libro libro = listaLibros.get(posicion);
         //holder.portada.setImageResource(libro.recursoImagen);
         Aplicacion aplicacion = (Aplicacion) contexto.getApplicationContext();
-        aplicacion.getLectorImagenes().get(libro.urlImagen,
+        aplicacion.getLectorImagenes().get(libro.getUrlImagen(),
                 new ImageLoader.ImageListener() {
                     @Override
                     public void onResponse(ImageLoader.ImageContainer
@@ -78,18 +78,18 @@ public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHo
                             //holder.portada.invalidate();
 
 
-                            if (libro.colorVibrante != -1 && libro.colorApagado != -1) {
-                                holder.itemView.setBackgroundColor(libro.colorApagado);
-                                holder.titulo.setBackgroundColor(libro.colorVibrante);
+                            if (libro.getColorVibrante() != -1 && libro.getColorApagado() != -1) {
+                                holder.itemView.setBackgroundColor(libro.getColorApagado());
+                                holder.titulo.setBackgroundColor(libro.getColorVibrante());
                                 holder.portada.invalidate();
                             } else {
                                 Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                                     public void onGenerated(Palette palette) {
-                                        libro.colorVibrante = palette.getLightVibrantColor(0);
-                                        libro.colorApagado = palette.getLightMutedColor(0);
+                                        libro.setColorVibrante(palette.getLightVibrantColor(0));
+                                        libro.setColorApagado(palette.getLightMutedColor(0));
 
-                                        holder.itemView.setBackgroundColor(libro.colorApagado);
-                                        holder.titulo.setBackgroundColor(libro.colorVibrante);
+                                        holder.itemView.setBackgroundColor(libro.getColorApagado());
+                                        holder.titulo.setBackgroundColor(libro.getColorVibrante());
                                         holder.portada.invalidate();
                                     }
                                 });
@@ -103,7 +103,7 @@ public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHo
                     }
                 });
 
-        holder.titulo.setText(libro.titulo);
+        holder.titulo.setText(libro.getTitulo());
         holder.itemView.setScaleX(1);
         holder.itemView.setScaleY(1);
     }
