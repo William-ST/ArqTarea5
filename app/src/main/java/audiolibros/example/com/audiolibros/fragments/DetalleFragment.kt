@@ -9,18 +9,14 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.MediaController
-import android.widget.TextView
-
-import com.android.volley.toolbox.NetworkImageView
 
 import java.io.IOException
 
 import audiolibros.example.com.audiolibros.Aplicacion
-import audiolibros.example.com.audiolibros.Libro
 import audiolibros.example.com.audiolibros.MainActivity
 import audiolibros.example.com.audiolibros.R
+import audiolibros.example.com.audiolibros.util.GlideApp
 import kotlinx.android.synthetic.main.fragment_detalle.view.*
 
 /**
@@ -30,6 +26,11 @@ import kotlinx.android.synthetic.main.fragment_detalle.view.*
 class DetalleFragment : Fragment(), View.OnTouchListener, MediaPlayer.OnPreparedListener, MediaController.MediaPlayerControl {
     lateinit var mediaPlayer: MediaPlayer
     lateinit var mediaController: MediaController
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mediaPlayer = MediaPlayer()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val vista = inflater.inflate(R.layout.fragment_detalle, container, false)
@@ -49,31 +50,29 @@ class DetalleFragment : Fragment(), View.OnTouchListener, MediaPlayer.OnPrepared
     }
 
     private fun ponInfoLibro(id: Int, vista: View) {
-        if ((activity.application as Aplicacion).listaLibros == null)
-            return
 
         val (titulo, autor, urlImagen, urlAudio) = (activity.application as Aplicacion).listaLibros[id]
-        view.titulo.text = titulo
-        view.autor.text = autor
-
-        val aplicacion = activity.application as Aplicacion
-        (view.portada as NetworkImageView).setImageUrl(urlImagen, aplicacion.lectoresImagenes)
+        vista.titulo.text = titulo
+        vista.autor.text = autor
+        GlideApp.with(this).load(urlImagen).fitCenter().into(vista.portada)
 
         vista.setOnTouchListener(this)
-        if (mediaPlayer != null) {
+
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.stop()
             mediaPlayer.release()
         }
-        mediaPlayer = MediaPlayer()
+
         mediaPlayer.setOnPreparedListener(this)
         mediaController = MediaController(activity)
         val audio = Uri.parse(urlAudio)
         try {
+            mediaPlayer.reset()
             mediaPlayer.setDataSource(activity, audio)
             mediaPlayer.prepareAsync()
         } catch (e: IOException) {
             Log.e("Audiolibros", "ERROR: No se puede reproducir $audio", e)
         }
-
     }
 
     fun ponInfoLibro(id: Int) {
@@ -84,7 +83,7 @@ class DetalleFragment : Fragment(), View.OnTouchListener, MediaPlayer.OnPrepared
         Log.d("Audiolibros", "Entramos en onPrepared de MediaPlayer")
         mediaPlayer.start()
         mediaController.setMediaPlayer(this)
-        mediaController.setAnchorView(view!!.findViewById(R.id.fragment_detalle))
+        mediaController.setAnchorView(view.findViewById(R.id.fragment_detalle))
         mediaController.isEnabled = true
         mediaController.show()
     }
@@ -124,7 +123,7 @@ class DetalleFragment : Fragment(), View.OnTouchListener, MediaPlayer.OnPrepared
 
     override fun getCurrentPosition(): Int {
         try {
-            return mediaPlayer!!.currentPosition
+            return mediaPlayer.currentPosition
         } catch (e: Exception) {
             return 0
         }

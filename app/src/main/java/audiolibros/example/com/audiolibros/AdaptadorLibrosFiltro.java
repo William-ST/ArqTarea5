@@ -51,7 +51,7 @@ public class AdaptadorLibrosFiltro extends AdaptadorLibros {
     }
 
     public void recalculaFiltro() {
-        listaLibros = new ArrayList<Libro>();
+        setListaLibros(new ArrayList<Libro>());
         indiceFiltro = new ArrayList<Integer>();
         for (int i = 0; i < listaSinFiltro.size(); i++) {
             Libro libro = listaSinFiltro.get(i);
@@ -59,7 +59,7 @@ public class AdaptadorLibrosFiltro extends AdaptadorLibros {
                     libro.getAutor().toLowerCase().contains(busqueda)) && (libro.getGenero().startsWith(genero))
                     && (!novedad || (novedad && libro.getNovedad()))
                     && (!leido || (leido && libro.getLeido()))) {
-                listaLibros.add(libro);
+                getListaLibros().add(libro);
                 indiceFiltro.add(i);
             }
         }
