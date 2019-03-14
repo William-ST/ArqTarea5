@@ -31,7 +31,7 @@ import com.bumptech.glide.request.target.Target
  */
 
 open class AdaptadorLibros(private val contexto: Context,
-                           protected var listaLibros: List<Libro> //Lista de libros a visualizar
+                           protected open var listaLibros: ArrayList<Libro> //Lista de libros a visualizar
 ) : RecyclerView.Adapter<AdaptadorLibros.ViewHolder>() {
 
     private val inflador: LayoutInflater //Crea Layouts a partir del XML
