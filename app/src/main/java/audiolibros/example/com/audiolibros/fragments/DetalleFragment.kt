@@ -28,8 +28,8 @@ import kotlinx.android.synthetic.main.fragment_detalle.view.*
  */
 
 class DetalleFragment : Fragment(), View.OnTouchListener, MediaPlayer.OnPreparedListener, MediaController.MediaPlayerControl {
-    internal var mediaPlayer: MediaPlayer? = null
-    internal var mediaController: MediaController
+    lateinit var mediaPlayer: MediaPlayer
+    lateinit var mediaController: MediaController
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val vista = inflater.inflate(R.layout.fragment_detalle, container, false)
@@ -39,16 +39,6 @@ class DetalleFragment : Fragment(), View.OnTouchListener, MediaPlayer.OnPrepared
         ponInfoLibro(position, vista)
         return vista
     }
-    /*
-    override fun onCreateView(inflador: LayoutInflater, contenedor: ViewGroup?, savedInstanceState: Bundle): View? {
-        val vista = inflador.inflate(R.layout.fragment_detalle, contenedor, false)
-        val position = arguments?.let {
-            arguments.getInt(ARG_ID_LIBRO,0)
-        } ?: 0
-        ponInfoLibro(position, vista)
-        return vista
-    }
-    */
 
     override fun onResume() {
         val detalleFragment = fragmentManager.findFragmentById(R.id.detalle_fragment) as? DetalleFragment
@@ -65,24 +55,21 @@ class DetalleFragment : Fragment(), View.OnTouchListener, MediaPlayer.OnPrepared
         val (titulo, autor, urlImagen, urlAudio) = (activity.application as Aplicacion).listaLibros[id]
         view.titulo.text = titulo
         view.autor.text = autor
-        //(vista.findViewById<View>(R.id.titulo) as TextView).text = titulo
-        //(vista.findViewById<View>(R.id.autor) as TextView).text = autor
 
         val aplicacion = activity.application as Aplicacion
-        (view.portada as NetworkImageView).setImageUrl(urlImagen, )
-        (vista.findViewById<View>(R.id.portada) as NetworkImageView).setImageUrl(urlImagen, aplicacion.lectoresImagenes)
+        (view.portada as NetworkImageView).setImageUrl(urlImagen, aplicacion.lectoresImagenes)
 
         vista.setOnTouchListener(this)
         if (mediaPlayer != null) {
-            mediaPlayer!!.release()
+            mediaPlayer.release()
         }
         mediaPlayer = MediaPlayer()
-        mediaPlayer!!.setOnPreparedListener(this)
+        mediaPlayer.setOnPreparedListener(this)
         mediaController = MediaController(activity)
         val audio = Uri.parse(urlAudio)
         try {
-            mediaPlayer!!.setDataSource(activity, audio)
-            mediaPlayer!!.prepareAsync()
+            mediaPlayer.setDataSource(activity, audio)
+            mediaPlayer.prepareAsync()
         } catch (e: IOException) {
             Log.e("Audiolibros", "ERROR: No se puede reproducir $audio", e)
         }
@@ -110,8 +97,8 @@ class DetalleFragment : Fragment(), View.OnTouchListener, MediaPlayer.OnPrepared
     override fun onStop() {
         mediaController.hide()
         try {
-            mediaPlayer!!.stop()
-            mediaPlayer!!.release()
+            mediaPlayer.stop()
+            mediaPlayer.release()
         } catch (e: Exception) {
             Log.d("Audiolibros", "Error en mediaPlayer.stop()")
         }
@@ -145,23 +132,23 @@ class DetalleFragment : Fragment(), View.OnTouchListener, MediaPlayer.OnPrepared
     }
 
     override fun getDuration(): Int {
-        return mediaPlayer!!.duration
+        return mediaPlayer.duration
     }
 
     override fun isPlaying(): Boolean {
-        return mediaPlayer!!.isPlaying
+        return mediaPlayer.isPlaying
     }
 
     override fun pause() {
-        mediaPlayer!!.pause()
+        mediaPlayer.pause()
     }
 
     override fun seekTo(pos: Int) {
-        mediaPlayer!!.seekTo(pos)
+        mediaPlayer.seekTo(pos)
     }
 
     override fun start() {
-        mediaPlayer!!.start()
+        mediaPlayer.start()
     }
 
     override fun getAudioSessionId(): Int {
