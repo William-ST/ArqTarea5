@@ -1,0 +1,32 @@
+(X) Ejercicio: Migrando la clase Libro de Audiolibros
+- class Libro -> data class Libro
+- var -> val (en todos los campos)
+- Boolean? -> Boolean (en campos novedad y leidos)
+- Uso de constantes
+- Cambio de List a MutableList
+
+(X) Ejercicio: Migrando la clase MainActivity de Audiolibros
+- elimnar los findviewbyid
+
+- eliminación del !!
+
+- uso de when en onNavigationItemSelected y onOptionsItemSelected
+
+- ajustes método mostrarDetalle
+ (uso del cast as y ?)
+
+(X) Ejercicio: Migrando la clase Detalle Fragment
+- lateinit
+- ?.let atributos del bundle
+- uso de cast as
+- uso de la librería Glide para mostrar imágenes
+
+
+(X) Ejercicio: Migrando la clase AdaptadorLibros
+- Uso de Glide para mostrar imágenes y mantener el obtenido de los colores Vibrante Apagado
+- Validación de nulos
+
+(X) las demás clases también se han migrado a excepción de ZoomSeekBar
+
+Extras:
+(_) Ejercicio: Comparativa Lambdas con y sin funciones inline Incluir captura con el resultado

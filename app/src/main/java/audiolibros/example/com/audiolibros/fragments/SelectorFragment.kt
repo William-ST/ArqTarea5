@@ -35,7 +35,6 @@ class SelectorFragment : Fragment(), Animator.AnimatorListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("SelectorFragment", "activity: "+(activity == null))
         adaptador = (activity.application as Aplicacion).adaptador
     }
 

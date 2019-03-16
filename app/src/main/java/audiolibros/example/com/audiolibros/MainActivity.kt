@@ -151,9 +151,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 builder.create().show()
                 return true
             }
+            else -> return super.onOptionsItemSelected(item)
         }
-
-        return super.onOptionsItemSelected(item)
     }
 
     fun irUltimoVisitado() {
