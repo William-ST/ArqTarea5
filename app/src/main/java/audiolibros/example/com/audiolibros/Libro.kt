@@ -11,7 +11,7 @@ const val G_S_XIX = "Literatura siglo XIX"
 const val G_SUSPENSE = "Suspense"
 val G_ARRAY = arrayOf(G_TODOS, G_EPICO, G_S_XIX, G_SUSPENSE)
 
-fun ejemploLibros(): List<Libro> {
+fun ejemploLibros(): MutableList<Libro> {
     val SERVIDOR = "http://mmoviles.upv.es/audiolibros/"
     val libros = ArrayList<Libro>()
     libros.add(Libro("Kappa", "Akutagawa",

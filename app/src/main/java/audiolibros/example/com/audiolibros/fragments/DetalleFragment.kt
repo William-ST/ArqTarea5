@@ -4,6 +4,7 @@ import android.app.Fragment
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -18,6 +19,9 @@ import audiolibros.example.com.audiolibros.MainActivity
 import audiolibros.example.com.audiolibros.R
 import audiolibros.example.com.audiolibros.util.GlideApp
 import kotlinx.android.synthetic.main.fragment_detalle.view.*
+import com.bumptech.glide.request.RequestOptions
+
+
 
 /**
  * Created by William_ST on 05/02/19.
@@ -54,7 +58,13 @@ class DetalleFragment : Fragment(), View.OnTouchListener, MediaPlayer.OnPrepared
         val (titulo, autor, urlImagen, urlAudio) = (activity.application as Aplicacion).listaLibros[id]
         vista.titulo.text = titulo
         vista.autor.text = autor
-        GlideApp.with(this).load(urlImagen).fitCenter().into(vista.portada)
+
+        val requestOptions = RequestOptions()
+        //requestOptions.placeholder(R.drawable.ic_placeholder)
+        requestOptions.error(R.drawable.books)
+
+        GlideApp.with(this).setDefaultRequestOptions(requestOptions).load(urlImagen).fitCenter()
+                .into(vista.portada)
 
         vista.setOnTouchListener(this)
 

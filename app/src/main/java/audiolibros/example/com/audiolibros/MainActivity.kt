@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private var adaptador: AdaptadorLibrosFiltro? = null
+    lateinit var adaptador: AdaptadorLibrosFiltro
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,21 +68,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 when (tab.position) {
                     0 //Todos
                     -> {
-                        adaptador!!.setNovedad(false)
-                        adaptador!!.setLeido(false)
+                        adaptador.setNovedad(false)
+                        adaptador.setLeido(false)
                     }
                     1 //Nuevos
                     -> {
-                        adaptador!!.setNovedad(true)
-                        adaptador!!.setLeido(false)
+                        adaptador.setNovedad(true)
+                        adaptador.setLeido(false)
                     }
                     2 //Leidos
                     -> {
-                        adaptador!!.setNovedad(false)
-                        adaptador!!.setLeido(true)
+                        adaptador.setNovedad(false)
+                        adaptador.setLeido(true)
                     }
                 }
-                adaptador!!.notifyDataSetChanged()
+                adaptador.notifyDataSetChanged()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {}
@@ -96,20 +96,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (id) {
             R.id.nav_todos -> {
-                adaptador!!.setGenero("")
-                adaptador!!.notifyDataSetChanged()
+                adaptador.setGenero("")
+                adaptador.notifyDataSetChanged()
             }
             R.id.nav_epico -> {
-                adaptador!!.setGenero(G_EPICO)
-                adaptador!!.notifyDataSetChanged()
+                adaptador.setGenero(G_EPICO)
+                adaptador.notifyDataSetChanged()
             }
             R.id.nav_XIX -> {
-                adaptador!!.setGenero(G_S_XIX)
-                adaptador!!.notifyDataSetChanged()
+                adaptador.setGenero(G_S_XIX)
+                adaptador.notifyDataSetChanged()
             }
             R.id.nav_suspense -> {
-                adaptador!!.setGenero(G_SUSPENSE)
-                adaptador!!.notifyDataSetChanged()
+                adaptador.setGenero(G_SUSPENSE)
+                adaptador.notifyDataSetChanged()
             }
             R.id.nav_preferencias -> {
                 val i = Intent(this, PreferenciasActivity::class.java)
